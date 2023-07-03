@@ -1,8 +1,13 @@
 import { ErrorBase } from "../../../utils/errors/errors";
+import { TimeSheetErrorNamesType, TimeSheetErrorCodesType, TimeSheetErrorMessagesType } from "./enums";
 
-type ErrorName = 
-    | 'MISSING_ATTRIBUTES'
-    | 'NOT_FOUND'
-    | 'ALREADY_SATISFIED'
-export class TimeSheetError extends ErrorBase<ErrorName> {}
+export class TimeSheetError extends ErrorBase<TimeSheetErrorNamesType, TimeSheetErrorMessagesType, TimeSheetErrorCodesType> {
+  constructor(errorName: TimeSheetErrorNamesType, errorMessage: TimeSheetErrorMessagesType, errorCode: TimeSheetErrorCodesType) {
+    super({
+      name: errorName,
+      message: errorMessage,
+      code: errorCode,
+    });
+  }
+}
 

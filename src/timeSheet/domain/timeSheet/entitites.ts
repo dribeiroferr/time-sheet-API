@@ -32,24 +32,23 @@ export class TimeSheetEntity implements ITimeSheetEntity {
 
     public isValid(): boolean { 
         try {
+
+            !this.mes ?? (() => { throw new TimeSheetError("MISSING_MES_ATTRIBUTE", "TIMESHEET_MISSING_ATTRIBUTES", "BAD_REQUEST")});
+            !this.horasTrabalhadas ?? (() => { throw new TimeSheetError('MISSING_HORAS_TRABALHADAS_ATTRIBUTE', 'TIMESHEET_MISSING_ATTRIBUTES', 'BAD_REQUEST')});
+            !this.horasExcedentes ?? (() => { throw new TimeSheetError("MISSING_HORAS_EXCEDENTES_ATTRIBUTE", "TIMESHEET_MISSING_ATTRIBUTES", "BAD_REQUEST")});
+            !this.horasDevidas ?? (() => { throw new TimeSheetError("MISSING_HORAS_DEVIDAS_ATTRIBUTE", "TIMESHEET_MISSING_ATTRIBUTES", "BAD_REQUEST")});
+            !(this.expedientes || this.expedientes.length === 0) ?? (() => { throw new TimeSheetError("MISSING_EXPEDIENTES_ATTRIBUTE", "TIMESHEET_MISSING_ATTRIBUTES", "BAD_REQUEST")}); 
+
             this.mes &&
             this.horasTrabalhadas &&
             this.horasExcedentes &&
             this.horasDevidas &&
-            this.expedientes ? 
-            true : (() => {throw new TimeSheetError({
-                name: "MISSING_ATTRIBUTES",
-                message: "Internal Error",
-                cause: "One attribute is missing"
-            });})
+            this.expedientes || this.expedientes.length >= 1 ? 
+            true : (() => {throw new TimeSheetError("MISSING_ALL_ATTRIBUTES", "TIMESHEET_MISSING_ATTRIBUTES", "BAD_REQUEST");})
 
             return true;
         } catch (error) {
-            if(error instanceof TimeSheetError){
-                if(error.name === "MISSING_ATTRIBUTES"){
-                    console.error(error);
-                }
-            }
+            error instanceof TimeSheetError ?? console.log(error)
         }
     }
 

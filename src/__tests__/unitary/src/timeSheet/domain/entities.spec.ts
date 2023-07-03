@@ -24,7 +24,7 @@ it('test_is_valid_returns_true_when_all_attributes_are_present', () => {
     expect(timeSheetEntity.isValid()).toBe(true);
 });
 
-// // Tests if isValid() method throws TimeSheetError when 'mes' attribute is missing
+// Tests if isValid() method throws TimeSheetError when 'mes' attribute is missing
 // it('test_is_valid_throws_error_when_mes_attribute_is_missing', () => {
 //     const timeSheetEntity = new TimeSheetEntity('', '160', '10', '10', [
 //         {
